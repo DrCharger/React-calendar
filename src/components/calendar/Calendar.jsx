@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import Navigation from './../navigation/Navigation';
-import Week from '../week/Week';
-import Sidebar from '../sidebar/Sidebar';
-import events from '../../gateway/events';
+import Navigation from "./../navigation/Navigation";
+import Week from "../week/Week";
+import Sidebar from "../sidebar/Sidebar";
+import events from "../../gateway/events";
 
-import './calendar.scss';
+import "./calendar.scss";
 
 class Calendar extends Component {
   state = {
@@ -13,11 +13,11 @@ class Calendar extends Component {
   };
 
   render() {
-    const { weekDates } = this.props;
+    const { weekDates, start } = this.props;
 
     return (
       <section className="calendar">
-        <Navigation weekDates={weekDates} />
+        <Navigation weekDates={weekDates} start={start} />
         <div className="calendar__body">
           <div className="calendar__week-container">
             <Sidebar />

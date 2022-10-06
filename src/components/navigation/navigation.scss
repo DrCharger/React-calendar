@@ -15,3 +15,15 @@
     border-left: 1px solid #eee;
   }
 }
+
+.today {
+  border-radius: 50%;
+  width: 30px;
+  line-height: 30px;
+  background-color: blue;
+  color: white;
+  text-align: center;
+  &-day {
+    color: blue;
+  }
+}
