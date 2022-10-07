@@ -1,0 +1,19 @@
+.popup-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: coral;
+  border-radius: 15px;
+  left: 75px;
+  &__btn {
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+}

@@ -1,9 +1,9 @@
-import React from 'react';
-import Hour from '../hour/Hour';
+import React from "react";
+import Hour from "../hour/Hour";
 
-import './day.scss';
+import "./day.scss";
 
-const Day = ({ dataDay, dayEvents }) => {
+const Day = ({ dataDay, dayEvents, onDelete }) => {
   const hours = Array(24)
     .fill()
     .map((val, index) => index);
@@ -13,11 +13,15 @@ const Day = ({ dataDay, dayEvents }) => {
       {hours.map((hour) => {
         //getting all events from the day we will render
         const hourEvents = dayEvents.filter(
-          (event) => event.dateFrom.getHours() === hour
+          (event) => new Date(event.start).getHours() === hour
         );
-
         return (
-          <Hour key={dataDay + hour} dataHour={hour} hourEvents={hourEvents} />
+          <Hour
+            key={dataDay + hour}
+            dataHour={hour}
+            hourEvents={hourEvents}
+            onDelete={onDelete}
+          />
         );
       })}
     </div>
