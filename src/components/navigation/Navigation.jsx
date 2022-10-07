@@ -2,15 +2,11 @@ import React from "react";
 import DayList from "./DayList";
 import "./navigation.scss";
 
-const Navigation = ({ weekDates, start }) => {
+const Navigation = ({ weekDates }) => {
   return (
     <header className="calendar__header">
       {weekDates.map((dayDate) => {
-        console.log(dayDate);
-        console.log(start);
-        return (
-          <DayList key={dayDate.getDate()} dayDate={dayDate} start={start} />
-        );
+        return <DayList key={dayDate.getDate()} dayDate={dayDate} />;
       })}
     </header>
   );
