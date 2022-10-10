@@ -11,8 +11,8 @@ class App extends Component {
   state = {
     weekStartDate: new Date(),
     openModal: false,
+    readonly: false,
   };
-
   handleOpen = () => {
     this.setState({
       openModal: true,
@@ -21,6 +21,13 @@ class App extends Component {
   handleClose = () => {
     this.setState({
       openModal: false,
+      readonly: false,
+    });
+  };
+
+  onReadonly = () => {
+    this.setState({
+      readonly: true,
     });
   };
   weekPrevious = () => {
@@ -44,7 +51,7 @@ class App extends Component {
   };
 
   render() {
-    const { weekStartDate, openModal } = this.state;
+    const { weekStartDate, openModal, readonly } = this.state;
     const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
 
     return (
@@ -60,6 +67,9 @@ class App extends Component {
           weekDates={weekDates}
           open={openModal}
           onClose={this.handleClose}
+          onOpen={this.handleOpen}
+          readonly={readonly}
+          onReadonly={this.onReadonly}
         />
       </>
     );

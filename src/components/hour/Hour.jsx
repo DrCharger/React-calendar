@@ -3,9 +3,13 @@ import React from "react";
 import Event from "../event/Event";
 import { formatMins } from "../../../src/utils/dateUtils.js";
 
-const Hour = ({ dataHour, hourEvents, onDelete }) => {
+const Hour = ({ dataHour, hourEvents, onDelete, onOpen, openSmallModal }) => {
   return (
-    <div className="calendar__time-slot" data-time={dataHour + 1}>
+    <div
+      className="calendar__time-slot"
+      data-time={dataHour + 1}
+      onClick={openSmallModal}
+    >
       {/* if no events in the current hour nothing will render here */}
       {hourEvents.map(({ id, start, end, title }) => {
         const eventStart = `${new Date(start).getHours()}:${formatMins(
@@ -28,6 +32,7 @@ const Hour = ({ dataHour, hourEvents, onDelete }) => {
             title={title}
             onDelete={onDelete}
             id={id}
+            onOpen={onOpen}
           />
         );
       })}

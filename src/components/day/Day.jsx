@@ -3,7 +3,7 @@ import Hour from "../hour/Hour";
 
 import "./day.scss";
 
-const Day = ({ dataDay, dayEvents, onDelete }) => {
+const Day = ({ dataDay, dayEvents, onDelete, onOpen, openSmallModal }) => {
   const hours = Array(24)
     .fill()
     .map((val, index) => index);
@@ -21,6 +21,8 @@ const Day = ({ dataDay, dayEvents, onDelete }) => {
             dataHour={hour}
             hourEvents={hourEvents}
             onDelete={onDelete}
+            onOpen={onOpen}
+            openSmallModal={openSmallModal}
           />
         );
       })}

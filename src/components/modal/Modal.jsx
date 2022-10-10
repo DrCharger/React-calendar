@@ -10,10 +10,13 @@ class Modal extends Component {
       startTime,
       endTime,
       description,
-      handleChange,
+      handleInputChange,
       close,
       onSubmit,
+      readonly,
+      text,
     } = this.props;
+
     return (
       <div className="modal overlay">
         <div className="modal__content">
@@ -24,7 +27,7 @@ class Modal extends Component {
             <form className="event-form" onSubmit={onSubmit}>
               <input
                 value={title}
-                onChange={handleChange}
+                onChange={handleInputChange}
                 type="text"
                 name="title"
                 placeholder="Title"
@@ -36,14 +39,16 @@ class Modal extends Component {
                   name="date"
                   className="event-form__field"
                   value={date}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
+                  readOnly={readonly}
                 />
                 <input
                   type="time"
                   name="startTime"
                   className="event-form__field"
                   value={startTime}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
+                  readOnly={readonly}
                 />
                 <span>-</span>
                 <input
@@ -51,7 +56,8 @@ class Modal extends Component {
                   name="endTime"
                   className="event-form__field"
                   value={endTime}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
+                  readOnly={readonly}
                 />
               </div>
               <textarea
@@ -59,10 +65,10 @@ class Modal extends Component {
                 placeholder="Description"
                 className="event-form__field"
                 value={description}
-                onChange={handleChange}
+                onChange={handleInputChange}
               ></textarea>
               <button type="submit" className="event-form__submit-btn">
-                Create
+                {text}
               </button>
             </form>
           </div>
