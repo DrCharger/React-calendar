@@ -1,9 +1,10 @@
 import React from "react";
 import { getDisplayedMonth } from "../../utils/dateUtils";
+import Spinner from "../../Spinner";
 
 import "./header.scss";
 
-const Header = ({ onOpen, prev, next, today, day }) => {
+const Header = ({ onOpen, prev, next, today, day, update }) => {
   return (
     <header className="header">
       <button className="button create-event-btn" onClick={onOpen}>
@@ -23,6 +24,7 @@ const Header = ({ onOpen, prev, next, today, day }) => {
           {getDisplayedMonth(day)}
         </span>
       </div>
+      {update && <Spinner size={30} />}
     </header>
   );
 };

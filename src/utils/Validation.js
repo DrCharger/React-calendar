@@ -1,15 +1,11 @@
-import moment from "moment";
-
-const formatter = (date) => moment(date).format("YYYY-mm-dd");
+import { formatter, timeInNumber } from "./manipulateTime";
 
 export const validation = (startTime, endTime) => {
-  let to = endTime.split(":")[0] * 60 + +endTime.split(":")[1];
-  let from = startTime.split(":")[0] * 60 + +startTime.split(":")[1];
-  if (to < from) {
+  if (timeInNumber(endTime) < timeInNumber(startTime)) {
     alert("Не правильно заданий час! Будь-ласка перевірте");
     return false;
   }
-  if (to - from > 360) {
+  if (timeInNumber(endTime) - timeInNumber(startTime) > 360) {
     alert("Задача не може бути більш ніж шість годин");
     return false;
   }
@@ -17,26 +13,22 @@ export const validation = (startTime, endTime) => {
 };
 
 export const crossTasks = (events, date, startTime, endTime) => {
+  const crossStart = timeInNumber(startTime);
+  const crossEnd = timeInNumber(endTime);
+
   const eventsPerDay = events
-    .filter((event) => {
-      return formatter(event.start) === formatter(date);
-    })
+    .filter((event) => formatter(event.start) === formatter(date))
     .map((elem) => {
       const from =
         new Date(elem.start).getHours() * 60 +
         new Date(elem.start).getMinutes();
       const to =
         new Date(elem.end).getHours() * 60 + new Date(elem.end).getMinutes();
-      let a = [];
-      for (let i = from; i <= to; i++) {
-        a.push(i);
-      }
 
-      return a;
+      return Array.apply(null, Array(to - from + 1)).map((elem, index) => {
+        return index + from;
+      });
     });
-
-  let crossEnd = +endTime.split(":")[0] * 60 + +endTime.split(":")[1];
-  let crossStart = +startTime.split(":")[0] * 60 + +startTime.split(":")[1];
 
   if (
     eventsPerDay.find((el) => el.includes(crossEnd) || el.includes(crossStart))
@@ -44,6 +36,5 @@ export const crossTasks = (events, date, startTime, endTime) => {
     alert("Вибачте, але у вас задача в заданий час! Перевірте свій графік");
     return false;
   }
-
   return true;
 };

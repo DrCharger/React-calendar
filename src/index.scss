@@ -14,8 +14,10 @@ body {
   }
 }
 .spinner {
+  position: absolute;
   border: 3px solid #ccc;
   border-left-color: transparent;
   animation: spin 0.5s infinite linear;
   border-radius: 50%;
+  right: 30px;
 }

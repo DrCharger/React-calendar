@@ -1,79 +1,51 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Header from "./components/header/Header.jsx";
 import Calendar from "./components/calendar/Calendar.jsx";
-import moment from "moment/moment.js";
-
 import { getWeekStartDate, generateWeekRange } from "../src/utils/dateUtils.js";
-
 import "./common.scss";
+import { add, subtract } from "./utils/manipulateTime.js";
 
-class App extends Component {
-  state = {
-    weekStartDate: new Date(),
-    openModal: false,
-    readonly: false,
-  };
-  handleOpen = () => {
-    this.setState({
-      openModal: true,
-    });
-  };
-  handleClose = () => {
-    this.setState({
-      openModal: false,
-      readonly: false,
-    });
-  };
+const App = () => {
+  const [weekStartDate, setWeekStartDate] = useState(new Date());
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [readonly, setReadonly] = useState(false);
+  const [update, toggleUpdate] = useState(true);
 
-  onReadonly = () => {
-    this.setState({
-      readonly: true,
-    });
+  const handleOpen = () => setIsModalOpened(true);
+  const handleClose = () => {
+    setIsModalOpened(false);
+    setReadonly(false);
   };
-  weekPrevious = () => {
-    const prevDate = moment(this.state.weekStartDate)
-      .subtract(7, "days")
-      .format();
-    this.setState({
-      weekStartDate: new Date(`${prevDate}`),
-    });
-  };
-  weekNext = () => {
-    const nextDate = moment(this.state.weekStartDate).add(7, "days").format();
-    this.setState({
-      weekStartDate: new Date(`${nextDate}`),
-    });
-  };
-  thisWeek = () => {
-    this.setState({
-      weekStartDate: new Date(),
-    });
-  };
+  const onReadonly = () => setReadonly(true);
+  const prevWeek = () =>
+    setWeekStartDate(new Date(`${subtract(weekStartDate)}`));
 
-  render() {
-    const { weekStartDate, openModal, readonly } = this.state;
-    const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
+  const nextWeek = () => setWeekStartDate(new Date(`${add(weekStartDate)}`));
 
-    return (
-      <>
-        <Header
-          onOpen={this.handleOpen}
-          prev={this.weekPrevious}
-          next={this.weekNext}
-          today={this.thisWeek}
-          day={weekStartDate}
-        />
-        <Calendar
-          weekDates={weekDates}
-          open={openModal}
-          onClose={this.handleClose}
-          onOpen={this.handleOpen}
-          readonly={readonly}
-          onReadonly={this.onReadonly}
-        />
-      </>
-    );
-  }
-}
+  const thisWeek = () => setWeekStartDate(new Date());
+  const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
+
+  return (
+    <>
+      <Header
+        onOpen={handleOpen}
+        prev={prevWeek}
+        next={nextWeek}
+        today={thisWeek}
+        day={weekStartDate}
+        update={update}
+      />
+      <Calendar
+        weekDates={weekDates}
+        open={isModalOpened}
+        onClose={handleClose}
+        onOpen={handleOpen}
+        readonly={readonly}
+        onReadonly={onReadonly}
+        toggleUpdate={toggleUpdate}
+      />
+    </>
+  );
+};
 
 export default App;

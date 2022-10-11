@@ -37,7 +37,7 @@
   }
 
   &__time-slot {
-    height: 59px;
+    height: 60px;
     position: relative;
     border-bottom: 1px solid #eee;
   }
@@ -68,6 +68,20 @@
 .red-line {
   position: absolute;
   width: 100%;
-  border-top: 2px solid red;
+  display: flex;
   z-index: 5;
+  &__line {
+    position: absolute;
+
+    border-top: 3px solid red;
+    width: 90%;
+  }
+  &__circle {
+    position: absolute;
+    width: 5px;
+    top: -6px;
+    border: 7px solid red;
+    border-radius: 50%;
+    background-color: red;
+  }
 }

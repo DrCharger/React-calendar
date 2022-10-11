@@ -1,6 +1,5 @@
 import React from "react";
 import Day from "../day/Day";
-
 import "./week.scss";
 
 const Week = ({ weekDates, events, onDelete, onOpen, openSmallModal }) => {
@@ -10,7 +9,7 @@ const Week = ({ weekDates, events, onDelete, onOpen, openSmallModal }) => {
         const dayEnd = new Date(dayStart.getTime()).setHours(
           dayStart.getHours() + 24
         );
-        //getting all events from the day we will render
+
         const dayEvents = events.filter(
           (event) =>
             new Date(event.start) > dayStart && new Date(event.end) < dayEnd

@@ -1,49 +1,30 @@
 import React, { Component } from "react";
-import Navigation from "./../navigation/Navigation";
-import Week from "../week/Week";
-import Sidebar from "../sidebar/Sidebar";
-import Spinner from "../../Spinner";
 import {
   createTasks,
   deleteTask,
   fetchTasksList,
   updateTasks,
 } from "../../gateway/tasksGateWays";
-
-import "./calendar.scss";
-import Modal from "../modal/Modal";
-import moment from "moment/moment";
+import {
+  TimeWithDate,
+  formatDate,
+  formatInvalidTime,
+  formatTime,
+} from "../../utils/manipulateTime";
 import { crossTasks, validation } from "../../utils/Validation";
-
-const formatInvalidTimeWithDate = (date, time) => {
-  let possibleTime;
-  if (time.split(":")[1] % 15 === 0) {
-    possibleTime = time;
-  } else {
-    possibleTime =
-      time.split(":")[0] +
-      ":" +
-      (time.split(":")[1] - (time.split(":")[1] % 15));
-  }
-
-  return moment([date, possibleTime].join(" "), moment.defaultFormat).toDate();
-};
-
-const formatTime = (date) => moment(date).format("HH:mm");
-const formatDate = (date) => moment(date).format("YYYY-MM-DD");
-const formatInvalidTime = (time) => moment(time, "HH:mm").format("HH:mm");
+import "./calendar.scss";
+import CalendarRender from "./CalendarRender";
 
 class Calendar extends Component {
   state = {
     events: [],
-    update: false,
     title: "",
-    date: `${formatDate(new Date())}`,
-    startTime: formatTime(new Date()),
-    endTime: formatTime(new Date()),
+    date: "",
+    startTime: "",
+    endTime: "",
     description: "",
     openModal: false,
-    openChangeModal: false,
+    isModalChangeOpened: false,
     id: null,
   };
   componentDidMount() {
@@ -51,59 +32,11 @@ class Calendar extends Component {
   }
 
   fetchTask = () => {
-    fetchTasksList().then((data) =>
+    fetchTasksList().then((data) => {
       this.setState({
         events: data,
-        update: false,
-      })
-    );
-  };
-  openChangeModal = (id) => {
-    const { title, description, end, start } = this.state.events.find(
-      (event) => event.id === id
-    );
-    this.setState({
-      openChangeModal: true,
-      id,
-      title,
-      description,
-      endTime: formatTime(end),
-      startTime: formatTime(start),
-      date: formatDate(start),
-    });
-  };
-  closeChangeModal = () => {
-    this.setState({
-      openChangeModal: false,
-      title: "",
-      date: "",
-      startTime: "",
-      endTime: "",
-      description: "",
-    });
-  };
-  openSmallModal = (event) => {
-    if (event.target.hasChildNodes()) {
-      return null;
-    }
-
-    const smallModalDate = new Date(
-      new Date().setDate(event.target.closest(".calendar__day").dataset.day)
-    );
-    this.setState({
-      endTime: formatInvalidTime(`${+event.target.dataset.time}:00`),
-      startTime: formatInvalidTime(`${+event.target.dataset.time - 1}:00`),
-      date: formatDate(smallModalDate),
-    });
-    this.props.onReadonly();
-    this.props.onOpen();
-  };
-
-  handleInputChange = (event) => {
-    const { name, value } = event.target;
-
-    this.setState({
-      [name]: value,
+      });
+      this.props.toggleUpdate(false);
     });
   };
   onSubmit = (event) => {
@@ -112,18 +45,12 @@ class Calendar extends Component {
     if (validation(startTime, endTime)) {
       if (crossTasks(events, date, startTime, endTime)) {
         alert("Час був змінений кратно 15 хвилинам");
+        this.props.toggleUpdate(true);
         this.setState({
-          update: true,
           readonly: false,
         });
-        const fromTime = formatInvalidTimeWithDate(
-          this.state.date,
-          this.state.startTime
-        );
-        const toTime = formatInvalidTimeWithDate(
-          this.state.date,
-          this.state.endTime
-        );
+        const fromTime = TimeWithDate(this.state.date, this.state.startTime);
+        const toTime = TimeWithDate(this.state.date, this.state.endTime);
         createTasks({
           title: this.state.title,
           description: this.state.description,
@@ -145,32 +72,64 @@ class Calendar extends Component {
   };
   onChangeModal = (event) => {
     event.preventDefault();
-    this.setState({
-      update: true,
-    });
-
-    const fromTime = formatInvalidTimeWithDate(
-      this.state.date,
-      this.state.startTime
-    );
-    const endTime = formatInvalidTimeWithDate(
-      this.state.date,
-      this.state.endTime
-    );
+    this.props.toggleUpdate(true);
     updateTasks(this.state.id, {
       title: this.state.title,
       description: this.state.description,
-      start: fromTime,
-      end: endTime,
+      start: this.fromTime,
+      end: this.toTime,
     }).then(() => this.fetchTask());
     this.closeChangeModal();
   };
 
   onDelete = (id) => {
-    this.setState({
-      update: true,
-    });
+    this.props.toggleUpdate(true);
     deleteTask(id).then(() => this.fetchTask());
+  };
+
+  openChangeModal = (id) => {
+    const { title, description, end, start } = this.state.events.find(
+      (event) => event.id === id
+    );
+    this.setState({
+      isModalChangeOpened: true,
+      id,
+      title,
+      description,
+      endTime: formatTime(end),
+      startTime: formatTime(start),
+      date: formatDate(start),
+    });
+  };
+
+  closeChangeModal = () => {
+    this.setState({
+      isModalChangeOpened: false,
+    });
+    this.onModalClose();
+  };
+  openSmallModal = (event) => {
+    if (event.target.hasChildNodes()) {
+      return null;
+    }
+
+    const smallModalDate = new Date(
+      new Date().setDate(event.target.closest(".calendar__day").dataset.day)
+    );
+    this.setState({
+      endTime: formatInvalidTime(`${+event.target.dataset.time}:00`),
+      startTime: formatInvalidTime(`${+event.target.dataset.time - 1}:00`),
+      date: formatDate(smallModalDate),
+    });
+    this.props.onReadonly();
+    this.props.onOpen();
+  };
+
+  handleInputChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value,
+    });
   };
 
   onModalClose = () => {
@@ -185,45 +144,21 @@ class Calendar extends Component {
   };
 
   render() {
-    const { weekDates, open, readonly } = this.props;
-    const { events, update, openChangeModal } = this.state;
-
     return (
-      <section className="calendar">
-        <Navigation weekDates={weekDates} />
-        <div className="calendar__body">
-          <div className="calendar__week-container">
-            <Sidebar />
-            <Week
-              weekDates={weekDates}
-              events={events}
-              onDelete={this.onDelete}
-              onOpen={this.openChangeModal}
-              openSmallModal={this.openSmallModal}
-            />
-            {open && (
-              <Modal
-                close={this.onModalClose}
-                handleInputChange={this.handleInputChange}
-                onSubmit={this.onSubmit}
-                text="Create"
-                readonly={readonly}
-                {...this.state}
-              />
-            )}
-            {openChangeModal && (
-              <Modal
-                close={this.closeChangeModal}
-                handleInputChange={this.handleInputChange}
-                onSubmit={this.onChangeModal}
-                text="Update"
-                {...this.state}
-              />
-            )}
-            {update && <Spinner size={100} />}
-          </div>
-        </div>
-      </section>
+      <CalendarRender
+        onClose={this.onModalClose}
+        weekDates={this.props.weekDates}
+        open={this.props.open}
+        readonly={this.props.readonly}
+        onDelete={this.onDelete}
+        openChangeModal={this.openChangeModal}
+        openSmallModal={this.openSmallModal}
+        onSubmit={this.onSubmit}
+        handleInputChange={this.handleInputChange}
+        closeChangeModal={this.closeChangeModal}
+        onChangeModal={this.onChangeModal}
+        {...this.state}
+      />
     );
   }
 }
