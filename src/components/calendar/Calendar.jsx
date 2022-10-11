@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import {
   createTasks,
   deleteTask,
@@ -19,9 +20,9 @@ class Calendar extends Component {
   state = {
     events: [],
     title: "",
-    date: "",
-    startTime: "",
-    endTime: "",
+    date: formatDate(new Date()),
+    startTime: formatTime(new Date()),
+    endTime: formatTime(new Date()),
     description: "",
     openModal: false,
     isModalChangeOpened: false,
@@ -135,9 +136,9 @@ class Calendar extends Component {
   onModalClose = () => {
     this.setState({
       title: "",
-      date: "",
-      startTime: "",
-      endTime: "",
+      date: formatDate(new Date()),
+      startTime: formatTime(new Date()),
+      endTime: formatTime(new Date()),
       description: "",
     });
     this.props.onClose();
@@ -162,5 +163,20 @@ class Calendar extends Component {
     );
   }
 }
+
+Calendar.propTypes = {
+  weekDates: PropTypes.array.isRequired,
+  open: PropTypes.bool,
+  onClose: PropTypes.func.isRequired,
+  onOpen: PropTypes.func.isRequired,
+  readonly: PropTypes.bool,
+  onReadonly: PropTypes.func.isRequired,
+  toggleUpdate: PropTypes.func.isRequired,
+};
+
+Calendar.defaultProps = {
+  open: false,
+  readonly: false,
+};
 
 export default Calendar;

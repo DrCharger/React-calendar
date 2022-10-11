@@ -1,5 +1,6 @@
 import React from "react";
 import "./popup.scss";
+import PropTypes from "prop-types";
 
 const PopUp = ({ onDelete, id, onOpen }) => {
   return (
@@ -14,4 +15,13 @@ const PopUp = ({ onDelete, id, onOpen }) => {
   );
 };
 
+PopUp.propTypes = {
+  onDelete: PropTypes.func.isRequired,
+  id: PropTypes.string,
+  onOpen: PropTypes.func.isRequired,
+};
+
+PopUp.defaultProps = {
+  id: null,
+};
 export default PopUp;

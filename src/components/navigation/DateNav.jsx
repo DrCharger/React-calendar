@@ -2,6 +2,7 @@ import React from "react";
 import { days } from "../../utils/dateUtils.js";
 import classNames from "classnames";
 import { formatMonthYear } from "../../utils/manipulateTime.js";
+import PropTypes from "prop-types";
 
 const DateNav = ({ dayDate }) => {
   const whatDay = formatMonthYear(dayDate) === formatMonthYear(new Date());
@@ -23,6 +24,14 @@ const DateNav = ({ dayDate }) => {
       </span>
     </div>
   );
+};
+
+DateNav.propTypes = {
+  dayDate: PropTypes.object,
+};
+
+DateNav.defaultProps = {
+  dayDate: new Date(),
 };
 
 export default DateNav;

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const Redline = ({ redline }) => {
   return (
@@ -7,5 +8,12 @@ const Redline = ({ redline }) => {
       <div className="red-line__line"></div>
     </div>
   );
+};
+
+Redline.propTypes = {
+  redline: PropTypes.number,
+};
+Redline.defaultProps = {
+  redline: 0,
 };
 export default Redline;

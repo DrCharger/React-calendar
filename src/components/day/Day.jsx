@@ -3,6 +3,7 @@ import Hour from "../hour/Hour";
 import Redline from "../redline/Redline";
 import "./day.scss";
 import { timeNow } from "../../utils/manipulateTime";
+import PropTypes from "prop-types";
 
 const Day = ({ dataDay, dayEvents, onDelete, onOpen, openSmallModal }) => {
   const hours = Array(24)
@@ -38,6 +39,19 @@ const Day = ({ dataDay, dayEvents, onDelete, onOpen, openSmallModal }) => {
       })}
     </div>
   );
+};
+
+Hour.propTypes = {
+  onDelete: PropTypes.func.isRequired,
+  onOpen: PropTypes.func.isRequired,
+  dataDay: PropTypes.number,
+  dayEvents: PropTypes.array,
+  openSmallModal: PropTypes.func.isRequired,
+};
+
+Hour.defaultProps = {
+  dataDay: 5,
+  dayEvents: [],
 };
 
 export default Day;

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./modal.scss";
 
 const Modal = (props) => {
@@ -92,6 +93,29 @@ const Modal = (props) => {
       </div>
     </div>
   );
+};
+
+Modal.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  date: PropTypes.object.isRequired,
+  startTime: PropTypes.object.isRequired,
+  endTime: PropTypes.object.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  readonly: PropTypes.bool,
+  text: PropTypes.string,
+  open: PropTypes.bool,
+  closeChangeModal: PropTypes.func.isRequired,
+};
+
+Modal.defaultProps = {
+  title: "Test",
+  description: "Test description",
+  readonly: false,
+  text: "Create",
+  open: false,
 };
 
 export default Modal;

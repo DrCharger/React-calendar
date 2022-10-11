@@ -1,6 +1,7 @@
 import React from "react";
 import { getDisplayedMonth } from "../../utils/dateUtils";
 import Spinner from "../../Spinner";
+import PropTypes from "prop-types";
 
 import "./header.scss";
 
@@ -27,6 +28,20 @@ const Header = ({ onOpen, prev, next, today, day, update }) => {
       {update && <Spinner size={30} />}
     </header>
   );
+};
+
+Header.propTypes = {
+  onOpen: PropTypes.func.isRequired,
+  prev: PropTypes.func.isRequired,
+  next: PropTypes.func.isRequired,
+  today: PropTypes.func.isRequired,
+  day: PropTypes.object,
+  update: PropTypes.bool,
+};
+
+Header.defaultProps = {
+  day: new Date(),
+  update: true,
 };
 
 export default Header;
