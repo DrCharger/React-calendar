@@ -31,7 +31,9 @@ export const crossTasks = (events, date, startTime, endTime) => {
     });
 
   if (
-    eventsPerDay.find((el) => el.includes(crossEnd) || el.includes(crossStart))
+    eventsPerDay.find(
+      (el) => el.includes(crossEnd - 1) || el.includes(crossStart + 1)
+    )
   ) {
     alert("Вибачте, але у вас задача в заданий час! Перевірте свій графік");
     return false;

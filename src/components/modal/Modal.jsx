@@ -14,30 +14,15 @@ const Modal = (props) => {
     onSubmit,
     readonly,
     text,
-    open,
-    closeChangeModal,
   } = props;
-
-  let btn;
-  if (open) {
-    btn = (
-      <button className="create-event__close-btn" onClick={onClose}>
-        +
-      </button>
-    );
-  } else {
-    btn = (
-      <button className="create-event__close-btn" onClick={closeChangeModal}>
-        +
-      </button>
-    );
-  }
 
   return (
     <div className="modal overlay">
       <div className="modal__content">
         <div className="create-event">
-          {btn}
+          <button className="create-event__close-btn" onClick={onClose}>
+            +
+          </button>
           <form className="event-form" onSubmit={onSubmit}>
             <input
               value={title}
@@ -98,9 +83,9 @@ const Modal = (props) => {
 Modal.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
-  date: PropTypes.object.isRequired,
-  startTime: PropTypes.object.isRequired,
-  endTime: PropTypes.object.isRequired,
+  date: PropTypes.string,
+  startTime: PropTypes.string,
+  endTime: PropTypes.string,
   handleInputChange: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
@@ -116,6 +101,9 @@ Modal.defaultProps = {
   readonly: false,
   text: "Create",
   open: false,
+  date: "2022-10-10",
+  startTime: "2022-10-11T15:49:17.908Z",
+  endTime: "2022-10-11T16:49:17.908Z",
 };
 
 export default Modal;

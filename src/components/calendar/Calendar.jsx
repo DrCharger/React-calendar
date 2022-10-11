@@ -33,12 +33,17 @@ class Calendar extends Component {
   }
 
   fetchTask = () => {
-    fetchTasksList().then((data) => {
-      this.setState({
-        events: data,
+    fetchTasksList()
+      .then((data) => {
+        this.setState({
+          events: data,
+        });
+        this.props.toggleUpdate(false);
+      })
+      .catch((err) => {
+        alert(err.message);
+        this.props.toggleUpdate(false);
       });
-      this.props.toggleUpdate(false);
-    });
   };
   onSubmit = (event) => {
     event.preventDefault();
@@ -57,7 +62,12 @@ class Calendar extends Component {
           description: this.state.description,
           start: fromTime,
           end: toTime,
-        }).then(() => this.fetchTask());
+        })
+          .then(() => this.fetchTask())
+          .catch((err) => {
+            alert(err.message);
+            this.props.toggleUpdate(false);
+          });
         this.onModalClose();
       } else {
         return this.setState({
@@ -74,18 +84,30 @@ class Calendar extends Component {
   onChangeModal = (event) => {
     event.preventDefault();
     this.props.toggleUpdate(true);
+    const fromTime = TimeWithDate(this.state.date, this.state.startTime);
+    const toTime = TimeWithDate(this.state.date, this.state.endTime);
     updateTasks(this.state.id, {
       title: this.state.title,
       description: this.state.description,
-      start: this.fromTime,
-      end: this.toTime,
-    }).then(() => this.fetchTask());
+      start: fromTime,
+      end: toTime,
+    })
+      .then(() => this.fetchTask())
+      .catch((err) => {
+        alert(err.message);
+        this.props.toggleUpdate(false);
+      });
     this.closeChangeModal();
   };
 
   onDelete = (id) => {
     this.props.toggleUpdate(true);
-    deleteTask(id).then(() => this.fetchTask());
+    deleteTask(id)
+      .then(() => this.fetchTask())
+      .catch((err) => {
+        this.props.toggleUpdate(false);
+        alert(err.message);
+      });
   };
 
   openChangeModal = (id) => {

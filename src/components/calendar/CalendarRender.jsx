@@ -14,6 +14,8 @@ const CalendarRender = (props) => {
     openChangeModal,
     isModalChangeOpened,
     openSmallModal,
+    onChangeModal,
+    closeChangeModal,
   } = props;
 
   return (
@@ -30,7 +32,14 @@ const CalendarRender = (props) => {
             openSmallModal={openSmallModal}
           />
           {open && <Modal text="Create" {...props} />}
-          {isModalChangeOpened && <Modal text="Update" {...props} />}
+          {isModalChangeOpened && (
+            <Modal
+              text="Update"
+              {...props}
+              onSubmit={onChangeModal}
+              onClose={closeChangeModal}
+            />
+          )}
         </div>
       </div>
     </section>
