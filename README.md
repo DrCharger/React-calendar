@@ -1,6 +1,6 @@
 # React-calendar
-Calendar start code
-To start:
+## Calendar start code
+### To start:
 Google-Calendar Project on React
 
 https://cool-mousse-819647.netlify.app
