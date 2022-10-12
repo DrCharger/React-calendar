@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import Hour from "../hour/Hour";
-import Redline from "../redline/Redline";
-import "./day.scss";
-import { timeNow } from "../../utils/manipulateTime";
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from 'react';
+import Hour from '../hour/Hour';
+import Redline from '../redline/Redline';
+import { timeNow } from '../../utils/manipulateTime';
+import PropTypes from 'prop-types';
 
 const Day = ({ dataDay, dayEvents, onDelete, onOpen, openSmallModal }) => {
   const hours = Array(24)
@@ -22,10 +21,8 @@ const Day = ({ dataDay, dayEvents, onDelete, onOpen, openSmallModal }) => {
   return (
     <div className="calendar__day" data-day={dataDay}>
       {dataDay === new Date().getDate() && <Redline redline={redLine} />}
-      {hours.map((hour) => {
-        const hourEvents = dayEvents.filter(
-          (event) => new Date(event.start).getHours() === hour
-        );
+      {hours.map(hour => {
+        const hourEvents = dayEvents.filter(event => new Date(event.start).getHours() === hour);
         return (
           <Hour
             key={dataDay + hour}

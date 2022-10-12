@@ -1,9 +1,9 @@
-import React from "react";
-import { getDisplayedMonth } from "../../utils/dateUtils";
-import Spinner from "../../Spinner";
-import PropTypes from "prop-types";
+import React from 'react';
+import { getDisplayedMonth } from '../../utils/dateUtils';
+import Spinner from '../spinner/Spinner';
+import PropTypes from 'prop-types';
 
-import "./header.scss";
+import './header.scss';
 
 const Header = ({ onOpen, prev, next, today, day, update }) => {
   return (
@@ -21,9 +21,7 @@ const Header = ({ onOpen, prev, next, today, day, update }) => {
         <button className="icon-button navigation__nav-icon" onClick={next}>
           <i className="fas fa-chevron-right"></i>
         </button>
-        <span className="navigation__displayed-month">
-          {getDisplayedMonth(day)}
-        </span>
+        <span className="navigation__displayed-month">{getDisplayedMonth(day)}</span>
       </div>
       {update && <Spinner size={30} />}
     </header>

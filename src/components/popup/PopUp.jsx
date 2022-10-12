@@ -1,6 +1,6 @@
-import React from "react";
-import "./popup.scss";
-import PropTypes from "prop-types";
+import React from 'react';
+import './popup.scss';
+import PropTypes from 'prop-types';
 
 const PopUp = ({ onDelete, id, onOpen, description }) => {
   return (

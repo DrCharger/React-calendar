@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import "./modal.scss";
+import React from 'react';
+import PropTypes from 'prop-types';
+import './modal.scss';
 
-const Modal = (props) => {
+const Modal = props => {
   const {
     title,
     description,
@@ -96,14 +96,14 @@ Modal.propTypes = {
 };
 
 Modal.defaultProps = {
-  title: "Test",
-  description: "Test description",
+  title: 'Test',
+  description: 'Test description',
   readonly: false,
-  text: "Create",
+  text: 'Create',
   open: false,
-  date: "2022-10-10",
-  startTime: "2022-10-11T15:49:17.908Z",
-  endTime: "2022-10-11T16:49:17.908Z",
+  date: '2022-10-10',
+  startTime: '2022-10-11T15:49:17.908Z',
+  endTime: '2022-10-11T16:49:17.908Z',
 };
 
 export default Modal;

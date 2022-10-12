@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import Header from "./components/header/Header.jsx";
-import Calendar from "./components/calendar/Calendar.jsx";
-import { getWeekStartDate, generateWeekRange } from "../src/utils/dateUtils.js";
-import "./common.scss";
-import { add, subtract } from "./utils/manipulateTime.js";
+import React, { useState } from 'react';
+import Header from './components/header/Header.jsx';
+import Calendar from './components/calendar/Calendar.jsx';
+import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
+import './common.scss';
+import { add, subtract } from './utils/manipulateTime.js';
 
 const App = () => {
   const [weekStartDate, setWeekStartDate] = useState(new Date());
@@ -17,8 +17,7 @@ const App = () => {
     setReadonly(false);
   };
   const onReadonly = () => setReadonly(true);
-  const prevWeek = () =>
-    setWeekStartDate(new Date(`${subtract(weekStartDate)}`));
+  const prevWeek = () => setWeekStartDate(new Date(`${subtract(weekStartDate)}`));
 
   const nextWeek = () => setWeekStartDate(new Date(`${add(weekStartDate)}`));
 

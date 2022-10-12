@@ -1,18 +1,9 @@
-import React, { useState } from "react";
-import PopUp from "../popup/PopUp";
-import "./event.scss";
-import PropTypes from "prop-types";
+import React, { useState } from 'react';
+import PopUp from '../popup/PopUp';
+import './event.scss';
+import PropTypes from 'prop-types';
 
-const Event = ({
-  id,
-  height,
-  marginTop,
-  title,
-  time,
-  onDelete,
-  onOpen,
-  description,
-}) => {
+const Event = ({ id, height, marginTop, title, time, onDelete, onOpen, description }) => {
   const [isPopUpOpened, setOpened] = useState(false);
   const eventStyle = {
     height,
@@ -30,12 +21,7 @@ const Event = ({
         <div className="event__time">{time}</div>
       </div>
       {isPopUpOpened && (
-        <PopUp
-          onDelete={onDelete}
-          id={id}
-          onOpen={onOpen}
-          description={description}
-        />
+        <PopUp onDelete={onDelete} id={id} onOpen={onOpen} description={description} />
       )}
     </>
   );
@@ -53,8 +39,8 @@ Event.propTypes = {
 
 Event.defaultProps = {
   id: null,
-  title: "Test",
-  time: "00:00",
+  title: 'Test',
+  time: '00:00',
 };
 
 export default Event;

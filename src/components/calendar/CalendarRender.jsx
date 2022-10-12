@@ -1,11 +1,11 @@
-import React from "react";
-import Modal from "../modal/Modal";
-import Navigation from "./../navigation/Navigation";
-import Week from "../week/Week";
-import Sidebar from "../sidebar/Sidebar";
-import PropTypes from "prop-types";
+import React from 'react';
+import Modal from '../modal/Modal';
+import Navigation from './../navigation/Navigation';
+import Week from '../week/Week';
+import Sidebar from '../sidebar/Sidebar';
+import PropTypes from 'prop-types';
 
-const CalendarRender = (props) => {
+const CalendarRender = props => {
   const {
     weekDates,
     events,
@@ -33,12 +33,7 @@ const CalendarRender = (props) => {
           />
           {open && <Modal text="Create" {...props} />}
           {isModalChangeOpened && (
-            <Modal
-              text="Update"
-              {...props}
-              onSubmit={onChangeModal}
-              onClose={closeChangeModal}
-            />
+            <Modal text="Update" {...props} onSubmit={onChangeModal} onClose={closeChangeModal} />
           )}
         </div>
       </div>
