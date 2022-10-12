@@ -5,7 +5,9 @@
   padding: 10px;
   background-color: coral;
   border-radius: 15px;
-  right: -120px;
+  width: 120px;
+  z-index: 2;
+  left: 80%;
   &__btn {
     height: 40px;
     border-radius: 8px;

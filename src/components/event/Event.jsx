@@ -15,11 +15,13 @@ const Event = ({ id, height, marginTop, title, time, onDelete, onOpen }) => {
   };
 
   return (
-    <div style={eventStyle} className="event" onClick={() => showPopUp()}>
+    <>
+      <div style={eventStyle} className="event" onClick={() => showPopUp()}>
+        <div className="event__title">{title}</div>
+        <div className="event__time">{time}</div>
+      </div>
       {isPopUpOpened && <PopUp onDelete={onDelete} id={id} onOpen={onOpen} />}
-      <div className="event__title">{title}</div>
-      <div className="event__time">{time}</div>
-    </div>
+    </>
   );
 };
 
