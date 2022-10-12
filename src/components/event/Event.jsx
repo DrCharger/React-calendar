@@ -3,7 +3,16 @@ import PopUp from "../popup/PopUp";
 import "./event.scss";
 import PropTypes from "prop-types";
 
-const Event = ({ id, height, marginTop, title, time, onDelete, onOpen }) => {
+const Event = ({
+  id,
+  height,
+  marginTop,
+  title,
+  time,
+  onDelete,
+  onOpen,
+  description,
+}) => {
   const [isPopUpOpened, setOpened] = useState(false);
   const eventStyle = {
     height,
@@ -20,7 +29,14 @@ const Event = ({ id, height, marginTop, title, time, onDelete, onOpen }) => {
         <div className="event__title">{title}</div>
         <div className="event__time">{time}</div>
       </div>
-      {isPopUpOpened && <PopUp onDelete={onDelete} id={id} onOpen={onOpen} />}
+      {isPopUpOpened && (
+        <PopUp
+          onDelete={onDelete}
+          id={id}
+          onOpen={onOpen}
+          description={description}
+        />
+      )}
     </>
   );
 };

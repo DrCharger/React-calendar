@@ -10,7 +10,7 @@ const Hour = ({ dataHour, hourEvents, onDelete, onOpen, openSmallModal }) => {
       data-time={dataHour + 1}
       onClick={openSmallModal}
     >
-      {hourEvents.map(({ id, start, end, title }) => {
+      {hourEvents.map(({ id, start, end, title, description }) => {
         const eventStart = `${new Date(start).getHours()}:${formatMins(
           new Date(start).getMinutes()
         )}`;
@@ -31,6 +31,7 @@ const Hour = ({ dataHour, hourEvents, onDelete, onOpen, openSmallModal }) => {
             onDelete={onDelete}
             id={id}
             onOpen={onOpen}
+            description={description}
           />
         );
       })}

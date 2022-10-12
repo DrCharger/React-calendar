@@ -2,9 +2,10 @@ import React from "react";
 import "./popup.scss";
 import PropTypes from "prop-types";
 
-const PopUp = ({ onDelete, id, onOpen }) => {
+const PopUp = ({ onDelete, id, onOpen, description }) => {
   return (
     <div className="popup-container">
+      <div className="popup-container__description">{description}</div>
       <button className="popup-container__btn" onClick={() => onOpen(id)}>
         Change
       </button>
